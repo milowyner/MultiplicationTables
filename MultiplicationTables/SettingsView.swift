@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @State var tableIndex = 5
-    @State var selectedNumberOfQuestions = 0
+    @Binding var tableIndex: Int
+    @Binding var selectedNumberOfQuestions: Int
     @Binding var gameIsActive: Bool
     
     let numberOfQuestions = ["5", "10", "20", "All"]
@@ -51,6 +51,6 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(gameIsActive: .constant(false))
+        SettingsView(tableIndex: .constant(5), selectedNumberOfQuestions: .constant(0), gameIsActive: .constant(false))
     }
 }

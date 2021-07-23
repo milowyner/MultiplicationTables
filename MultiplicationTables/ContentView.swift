@@ -8,14 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var tableIndex = 5
+    @State var selectedNumberOfQuestions = 0
     @State var gameIsActive = false
+    
+    let numberOfQuestions = ["5", "10", "20", "All"]
     
     var body: some View {
         Group {
             if gameIsActive {
-                GameView(isActive: $gameIsActive)
+                GameView(table: tableIndex + 1, selectedNumberOfQuestions: selectedNumberOfQuestions, isActive: $gameIsActive)
             } else {
-                SettingsView(gameIsActive: $gameIsActive)
+                SettingsView(tableIndex: $tableIndex, selectedNumberOfQuestions: $selectedNumberOfQuestions, gameIsActive: $gameIsActive)
             }
         }
     }

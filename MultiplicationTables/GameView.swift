@@ -8,12 +8,18 @@
 import SwiftUI
 
 struct GameView: View {
+    let table: Int
+    let selectedNumberOfQuestions: Int
     @Binding var isActive: Bool
+    
+    let numberOfQuestions = ["5", "10", "20", "All"]
     
     var body: some View {
         NavigationView {
             VStack {
                 Text("Hello game!")
+                Text("\(table) multiplication table")
+                Text("\(numberOfQuestions[selectedNumberOfQuestions]) questions")
                 Button("End Game") {
                     withAnimation {
                         isActive = false
@@ -27,6 +33,6 @@ struct GameView: View {
 
 struct GameView_Previews: PreviewProvider {
     static var previews: some View {
-        GameView(isActive: .constant(true))
+        GameView(table: 3, selectedNumberOfQuestions: 10, isActive: .constant(true))
     }
 }
