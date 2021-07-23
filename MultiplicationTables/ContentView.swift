@@ -7,19 +7,26 @@
 
 import SwiftUI
 
+enum NumberOfQuestions: String, CaseIterable, Identifiable {
+    case five = "5"
+    case ten = "10"
+    case twenty = "20"
+    case all = "All"
+    
+    var id: String { self.rawValue }
+}
+
 struct ContentView: View {
     @State var tableIndex = 5
-    @State var selectedNumberOfQuestions = 0
+    @State var numberOfQuestions = NumberOfQuestions.five
     @State var gameIsActive = false
-    
-    let numberOfQuestions = ["5", "10", "20", "All"]
     
     var body: some View {
         Group {
             if gameIsActive {
-                GameView(table: tableIndex + 1, selectedNumberOfQuestions: selectedNumberOfQuestions, isActive: $gameIsActive)
+                GameView(table: tableIndex + 1, numberOfQuestions: numberOfQuestions, isActive: $gameIsActive)
             } else {
-                SettingsView(tableIndex: $tableIndex, selectedNumberOfQuestions: $selectedNumberOfQuestions, gameIsActive: $gameIsActive)
+                SettingsView(tableIndex: $tableIndex, numberOfQuestions: $numberOfQuestions, gameIsActive: $gameIsActive)
             }
         }
     }

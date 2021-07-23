@@ -9,10 +9,8 @@ import SwiftUI
 
 struct SettingsView: View {
     @Binding var tableIndex: Int
-    @Binding var selectedNumberOfQuestions: Int
+    @Binding var numberOfQuestions: NumberOfQuestions
     @Binding var gameIsActive: Bool
-    
-    let numberOfQuestions = ["5", "10", "20", "All"]
     
     var body: some View {
         NavigationView {
@@ -26,9 +24,9 @@ struct SettingsView: View {
                 Section {
                     VStack(alignment: .leading) {
                         Text("Number of questions:")
-                        Picker("Number of questions", selection: $selectedNumberOfQuestions) {
-                            ForEach(0..<numberOfQuestions.count) {
-                                Text(numberOfQuestions[$0])
+                        Picker("Number of questions", selection: $numberOfQuestions) {
+                            ForEach(NumberOfQuestions.allCases) {
+                                Text($0.rawValue).tag($0)
                             }
                         }
                         .pickerStyle(SegmentedPickerStyle())
@@ -51,6 +49,6 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(tableIndex: .constant(5), selectedNumberOfQuestions: .constant(0), gameIsActive: .constant(false))
+        SettingsView(tableIndex: .constant(5), numberOfQuestions: .constant(.five), gameIsActive: .constant(false))
     }
 }
