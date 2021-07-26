@@ -11,20 +11,32 @@ struct GameView: View {
     let table: Int
     let numberOfQuestions: NumberOfQuestions
     @Binding var isActive: Bool
+    @State private var answer: String = ""
         
     var body: some View {
-        NavigationView {
-            VStack {
-                Text("Hello game!")
-                Text("\(table) multiplication table")
-                Text("\(numberOfQuestions.rawValue) questions")
-                Button("End Game") {
-                    withAnimation {
-                        isActive = false
-                    }
+        VStack {
+            Spacer()
+            
+            Text("What is")
+                .font(.title)
+            Text("3 x 5")
+                .font(.system(size: 40).bold())
+                .padding(.bottom, 16)
+            
+            TextField("Answer", text: $answer, onCommit:  {
+                // check answer
+            })
+            .frame(width: 130)
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .multilineTextAlignment(.center)
+            .font(.title)
+            
+            Spacer()
+            Button("End Game") {
+                withAnimation {
+                    isActive = false
                 }
             }
-            .navigationTitle("Multiplication Tables")
         }
     }
 }
