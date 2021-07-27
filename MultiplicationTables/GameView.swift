@@ -11,12 +11,15 @@ struct GameView: View {
     let table: Int
     let numberOfQuestions: NumberOfQuestions
     @Binding var isActive: Bool
+    
     @State private var answer = ""
     @State private var numberInTable = ""
     
     private var question: String {
         "\(numberInTable) x \(table)"
     }
+    
+    @State private var questionNumber = 1
     
     @State private var alertTitle = ""
     @State private var alertMessage = ""
@@ -71,8 +74,15 @@ struct GameView: View {
         })
         .alert(isPresented: $showingAlert, content: {
             Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("Next"), action: {
-                numberInTable = randomNumberInTable()
-                answer = ""
+                if questionNumber == (numberOfQuestions.number ?? table) {
+                    withAnimation {
+                        isActive = false
+                    }
+                } else {
+                    numberInTable = randomNumberInTable()
+                    answer = ""
+                    questionNumber += 1
+                }
             }))
         })
     }
