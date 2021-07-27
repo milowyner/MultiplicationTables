@@ -13,25 +13,29 @@ struct GameView: View {
     @Binding var isActive: Bool
     
     @State private var answer = ""
-    @State private var numberInTable = ""
+    @State private var questionNumber = 1
+    @State private var numbersInTable = [Int]()
+    
+    private var numberInTable: Int {
+        let index: Int
+        if numberOfQuestions.number != nil {
+            index = (questionNumber - 1) % table
+        } else {
+            index = questionNumber - 1
+        }
+        return numbersInTable.isEmpty ? 0 : numbersInTable[index]
+    }
     
     private var question: String {
         "\(numberInTable) x \(table)"
     }
     
-    @State private var questionNumber = 1
-    
     @State private var alertTitle = ""
     @State private var alertMessage = ""
     @State private var showingAlert = false
     
-    private func randomNumberInTable() -> String {
-        "\(Int.random(in: 1...table))"
-    }
-    
     func checkAnswer() {
-        guard let numberInTable = Int(numberInTable),
-              let answer = Int(answer) else { return }
+        guard let answer = Int(answer) else { return }
         let correctAnswer = numberInTable * table
         
         if answer == correctAnswer {
@@ -42,6 +46,20 @@ struct GameView: View {
         alertMessage = "\(question) = \(correctAnswer)"
 
         showingAlert = true
+    }
+    
+    func nextQuestion() {
+        if questionNumber == (numberOfQuestions.number ?? table) {
+            withAnimation {
+                isActive = false
+            }
+        } else {
+            answer = ""
+            questionNumber += 1
+            if (questionNumber - 1) % table == 0 {
+                numbersInTable.shuffle()
+            }
+        }
     }
     
     var body: some View {
@@ -70,20 +88,10 @@ struct GameView: View {
             }
         }
         .onAppear(perform: {
-            numberInTable = randomNumberInTable()
+            numbersInTable = Array(1...table).shuffled()
         })
         .alert(isPresented: $showingAlert, content: {
-            Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("Next"), action: {
-                if questionNumber == (numberOfQuestions.number ?? table) {
-                    withAnimation {
-                        isActive = false
-                    }
-                } else {
-                    numberInTable = randomNumberInTable()
-                    answer = ""
-                    questionNumber += 1
-                }
-            }))
+            Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("Next"), action: nextQuestion))
         })
     }
 }
