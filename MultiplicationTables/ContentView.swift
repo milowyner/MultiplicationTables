@@ -14,6 +14,15 @@ enum NumberOfQuestions: String, CaseIterable, Identifiable {
     case all = "All"
     
     var id: String { self.rawValue }
+    
+    var number: Int? {
+        switch self {
+        case .five: return 5
+        case .ten: return 10
+        case .twenty: return 20
+        case .all: return nil
+        }
+    }
 }
 
 struct ContentView: View {
