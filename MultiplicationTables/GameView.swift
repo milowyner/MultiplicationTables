@@ -64,6 +64,9 @@ struct GameView: View {
     
     var body: some View {
         VStack {
+            Text("Question \(questionNumber) of \(numberOfQuestions.number ?? table)")
+                .padding()
+            
             Spacer()
             
             Text("What is")
