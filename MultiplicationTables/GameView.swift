@@ -112,6 +112,7 @@ struct GameView: View {
             })
             .frame(width: 130)
             .textFieldStyle(RoundedBorderTextFieldStyle())
+            .keyboardType(.numbersAndPunctuation)
             .multilineTextAlignment(.center)
             .font(.title)
             
