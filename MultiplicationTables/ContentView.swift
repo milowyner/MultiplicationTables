@@ -36,6 +36,7 @@ struct ContentView: View {
                 GameView(table: tableIndex + 1, numberOfQuestions: numberOfQuestions, isActive: $gameIsActive)
             } else {
                 SettingsView(tableIndex: $tableIndex, numberOfQuestions: $numberOfQuestions, gameIsActive: $gameIsActive)
+                    .transition(.move(edge: .leading))
             }
         }
     }

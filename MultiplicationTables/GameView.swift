@@ -79,8 +79,25 @@ struct GameView: View {
     
     var body: some View {
         VStack {
-            Text("Question \(questionNumber) of \(numberOfQuestions.number ?? table)")
-                .padding()
+            ZStack {
+                HStack {
+                    Button(action: {
+                        withAnimation {
+                            isActive = false
+                        }
+                    }, label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: "chevron.left")
+                            Text("Back")
+                        }
+                    })
+                    Spacer()
+                }
+                .padding(.horizontal)
+                
+                Text("Question \(questionNumber) of \(numberOfQuestions.number ?? table)")
+                    .padding()
+            }
             
             Spacer()
             
@@ -99,11 +116,6 @@ struct GameView: View {
             .font(.title)
             
             Spacer()
-            Button("Back to Menu") {
-                withAnimation {
-                    isActive = false
-                }
-            }
         }
         .onAppear(perform: {
             numbersInTable = Array(1...table).shuffled()
